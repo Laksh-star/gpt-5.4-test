@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Stock Portfolio Tracker</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Personal Stock Portfolio Tracker</p>
+          <h1>Live portfolio monitoring with holdings, pricing, and profit visibility.</h1>
+          <p class="hero-copy">
+            Track your positions across major equities, refresh on demand, and keep a running
+            total of value, cost basis, and unrealized P/L.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="themeToggle" class="ghost-button" type="button" aria-label="Toggle theme">
+            Toggle theme
+          </button>
+          <button id="refreshButton" class="primary-button" type="button">Refresh prices</button>
+        </div>
+      </header>
+
+      <section class="status-bar">
+        <div>
+          <span class="status-label">Data mode</span>
+          <strong id="dataMode">Live</strong>
+        </div>
+        <div>
+          <span class="status-label">Last updated</span>
+          <strong id="lastUpdated">Waiting for first refresh</strong>
+        </div>
+        <div>
+          <span class="status-label">Refresh cadence</span>
+          <strong>Every 5 minutes</strong>
+        </div>
+      </section>
+
+      <section class="summary-grid" id="summaryGrid">
+        <article class="metric-card">
+          <span>Total portfolio</span>
+          <strong id="totalValue">$0.00</strong>
+          <small>Current market value</small>
+        </article>
+        <article class="metric-card">
+          <span>Total cost basis</span>
+          <strong id="totalCost">$0.00</strong>
+          <small>Average buy price x shares</small>
+        </article>
+        <article class="metric-card">
+          <span>Unrealized P/L</span>
+          <strong id="totalProfitLoss">$0.00</strong>
+          <small id="profitLossPercent">0.00%</small>
+        </article>
+        <article class="metric-card">
+          <span>Daily move</span>
+          <strong id="dailyChange">$0.00</strong>
+          <small>Based on previous close</small>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel watchlist-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Watchlist</p>
+              <h2>Market snapshot</h2>
+            </div>
+          </div>
+          <div class="quote-grid" id="quoteGrid"></div>
+        </article>
+
+        <article class="panel form-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Holdings</p>
+              <h2>Add or edit a position</h2>
+            </div>
+          </div>
+          <form id="holdingForm" class="holding-form">
+            <input type="hidden" id="holdingId" />
+            <label>
+              Ticker
+              <input id="tickerInput" name="ticker" maxlength="10" placeholder="AAPL" required />
+            </label>
+            <label>
+              Shares
+              <input
+                id="sharesInput"
+                name="shares"
+                type="number"
+                min="0.0001"
+                step="0.0001"
+                placeholder="10"
+                required
+              />
+            </label>
+            <label>
+              Avg buy price
+              <input
+                id="avgPriceInput"
+                name="avgPrice"
+                type="number"
+                min="0.01"
+                step="0.01"
+                placeholder="185.50"
+                required
+              />
+            </label>
+            <div class="form-actions">
+              <button class="primary-button" type="submit" id="saveHoldingButton">
+                Save holding
+              </button>
+              <button class="ghost-button" type="button" id="cancelEditButton" hidden>
+                Cancel edit
+              </button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Portfolio</p>
+            <h2>Current holdings</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Shares</th>
+                <th>Avg buy</th>
+                <th>Current price</th>
+                <th>Market value</th>
+                <th>Cost basis</th>
+                <th>P/L</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="holdingsTableBody"></tbody>
+          </table>
+        </div>
+        <p id="emptyState" class="empty-state">
+          No holdings yet. Add your first position to populate the portfolio summary.
+        </p>
+      </section>
+    </div>
+
+    <template id="quoteCardTemplate">
+      <article class="quote-card">
+        <div class="quote-header">
+          <div>
+            <strong class="quote-symbol"></strong>
+            <span class="quote-name"></span>
+          </div>
+          <span class="quote-source"></span>
+        </div>
+        <div class="quote-price"></div>
+        <div class="quote-change"></div>
+      </article>
+    </template>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

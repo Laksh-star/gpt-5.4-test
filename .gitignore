@@ -1,0 +1,10 @@
+.DS_Store
+.pycache/
+__pycache__/
+node_modules/
+test-results/
+playwright-report/
+portfolio-app.png
+portfolio-app-live.png
+portfolio-demo-recording.png
+SESSION_REPORT.md
