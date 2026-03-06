@@ -14,6 +14,20 @@ This project is meant to demonstrate a focused subset of GPT-5.4-style capabilit
 
 It is best understood as a practical coding-and-browser-agent demo, not as a proof of every GPT-5.4 release claim.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    A["Browser UI (HTML/CSS/JS)"] --> B["Python Server"]
+    B --> C["yfinance"]
+    B --> D["Yahoo Quote Endpoint"]
+    B --> E["Playwright Scraper"]
+    B --> F["Mock/Demo Quotes"]
+    A --> G["Local Storage"]
+    H["Playwright Tests"] --> A
+    H --> B
+```
+
 ## Screenshots
 
 ### Visible browser demo
@@ -44,7 +58,7 @@ It is best understood as a practical coding-and-browser-agent demo, not as a pro
 - Manual refresh plus auto-refresh every 5 minutes
 - Dark/light mode toggle with persistence
 - Responsive layout for desktop and mobile
-- Playwright end-to-end test
+- Expanded Playwright end-to-end coverage for totals, edit/delete flows, persistence, and mobile workflow
 
 ## Tech Stack
 
@@ -126,7 +140,7 @@ In live mode, the app tries providers in this order:
 npx playwright test
 ```
 
-The Playwright config starts the local server automatically in mock mode.
+The Playwright config starts the local server automatically in mock mode and retains traces/screenshots on failure.
 
 ## Notes on Data Providers
 
@@ -178,7 +192,7 @@ In practical terms, this demo shows:
 - a complete working app
 - a deterministic mock mode for repeatable tests and recordings
 - a live-data mode with provider fallback behavior
-- a passing Playwright test suite entry point
+- a passing Playwright suite covering CRUD, persistence, and mobile behavior
 - a browser-driven demo flow covering add, edit, delete, refresh, theme toggle, and responsive resize
 
 ## What This Demo Does Not Demonstrate
@@ -206,6 +220,10 @@ The browser automation here is primarily Playwright-based web interaction, which
 - Live quote sources may change behavior or rate-limit requests.
 - Holdings are stored in browser local storage, not a database.
 - The Playwright scraping fallback depends on the target site structure remaining stable.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
 ## Suggested Next Improvements
 
