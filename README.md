@@ -11,6 +11,7 @@ This project is meant to demonstrate a focused subset of GPT-5.4-style capabilit
 - generating and running Playwright automation
 - operating a live browser session to verify UI behavior
 - recovering when preferred data providers are unavailable by using fallbacks
+- simulating the tool-search problem with a local MCP-style catalog and deterministic workflows
 
 It is best understood as a practical coding-and-browser-agent demo, not as a proof of every GPT-5.4 release claim.
 
@@ -18,13 +19,16 @@ It is best understood as a practical coding-and-browser-agent demo, not as a pro
 
 ```mermaid
 flowchart LR
-    A["Browser UI (HTML/CSS/JS)"] --> B["Python Server"]
+    A["Portfolio UI"] --> B["Python Server"]
+    I["Tool Search Lab UI"] --> B
     B --> C["yfinance"]
     B --> D["Yahoo Quote Endpoint"]
     B --> E["Playwright Scraper"]
     B --> F["Mock/Demo Quotes"]
+    B --> J["Local MCP-Style Server Catalog"]
     A --> G["Local Storage"]
     H["Playwright Tests"] --> A
+    H --> I
     H --> B
 ```
 
@@ -59,6 +63,7 @@ flowchart LR
 - Dark/light mode toggle with persistence
 - Responsive layout for desktop and mobile
 - Expanded Playwright end-to-end coverage for totals, edit/delete flows, persistence, and mobile workflow
+- Separate Tool Search Lab for comparing eager vs. on-demand definition loading across local MCP-style servers
 
 ## Tech Stack
 
@@ -73,11 +78,14 @@ flowchart LR
 ├── public/
 │   ├── index.html
 │   ├── app.js
-│   └── styles.css
+│   ├── styles.css
+│   ├── tool-search-lab.html
+│   └── tool-search-lab.js
 ├── scripts/
 │   └── scrape-quotes.mjs
 ├── tests/
-│   └── portfolio.spec.js
+│   ├── portfolio.spec.js
+│   └── tool-search-lab.spec.js
 ├── playwright.config.js
 ├── package.json
 ├── requirements.txt
@@ -134,6 +142,21 @@ In live mode, the app tries providers in this order:
 3. Playwright scraping
 4. demo fallback for known symbols
 
+### Tool Search Lab
+
+Run the same server and open:
+
+```text
+http://127.0.0.1:8000/tool-search-lab
+```
+
+The lab compares two deterministic modes:
+
+1. `eager`: all tool definitions are loaded before the scenario starts
+2. `search`: only the required server and tool definitions are loaded on demand
+
+This is a local MCP-style simulation of the tool-search problem, not a direct proof of OpenAI API tool-search benchmark results.
+
 ## Run Tests
 
 ```bash
@@ -160,6 +183,8 @@ Recommended demo sequence:
 6. Delete one holding.
 7. Resize to mobile width.
 8. Run the Playwright suite.
+9. Open `/tool-search-lab`.
+10. Run `Daily Portfolio Brief` in search mode and compare it with eager mode.
 
 ## Demo Script
 
@@ -176,6 +201,7 @@ If you are screen-recording or presenting this repo, use this tighter sequence:
 9. Resize to mobile width and show the responsive layout.
 10. Run `npx playwright test` and show the passing result.
 11. Optionally rerun in live-data mode to show provider fallback behavior.
+12. Open `http://127.0.0.1:8000/tool-search-lab` and show that search mode loads fewer definitions than eager mode for the same scenario.
 
 ## What This Demo Demonstrates
 
@@ -194,13 +220,13 @@ In practical terms, this demo shows:
 - a live-data mode with provider fallback behavior
 - a passing Playwright suite covering CRUD, persistence, and mobile behavior
 - a browser-driven demo flow covering add, edit, delete, refresh, theme toggle, and responsive resize
+- a local MCP-style lab showing why on-demand tool loading can reduce definition load cost for the same workflow
 
 ## What This Demo Does Not Demonstrate
 
 This repository is not strong evidence for:
 
 - deep web research or multi-source synthesis
-- large tool-search ecosystems or MCP-style tool selection
 - 1M-context or very long-context workflows
 - spreadsheet, document, or presentation generation
 - explicit token-efficiency or `/fast` mode measurement
@@ -211,8 +237,9 @@ It only partially demonstrates:
 - computer use beyond the browser
 - screenshot-driven interaction
 - native desktop-style automation across arbitrary applications
+- large real-world tool-search ecosystems or external MCP server interoperability
 
-The browser automation here is primarily Playwright-based web interaction, which is strong evidence for browser-task execution, but not a full proof of generalized desktop computer use.
+The browser automation here is primarily Playwright-based web interaction, which is strong evidence for browser-task execution, but not a full proof of generalized desktop computer use. The Tool Search Lab is a local simulation of the tool-search problem rather than a benchmark of OpenAI API tool search on real MCP networks.
 
 ## Known Limitations
 
@@ -220,6 +247,7 @@ The browser automation here is primarily Playwright-based web interaction, which
 - Live quote sources may change behavior or rate-limit requests.
 - Holdings are stored in browser local storage, not a database.
 - The Playwright scraping fallback depends on the target site structure remaining stable.
+- The Tool Search Lab uses deterministic local mock servers rather than real MCP servers or remote tool registries.
 
 ## License
 
@@ -231,4 +259,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE).
 - Add CSV import/export
 - Add server-side holdings persistence
 - Add caching and rate-limit handling for quote providers
-- Expand Playwright coverage for edit/delete/theme persistence/mobile layout
+- Add real MCP server adapters behind the Tool Search Lab interface

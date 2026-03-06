@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tool Search Lab</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Tool Search Lab</p>
+          <h1>Show why loading tools on demand matters before you need real MCP servers.</h1>
+          <p class="hero-copy">
+            This lab simulates an MCP-style tool catalog locally. Run the same scenario in eager and
+            search modes, compare definition load costs, and inspect the incremental trace.
+          </p>
+          <div class="hero-nav">
+            <a class="ghost-link" href="/">Open portfolio tracker</a>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button id="labThemeToggle" class="ghost-button" type="button" aria-label="Toggle theme">
+            Toggle theme
+          </button>
+          <button id="runScenarioButton" class="primary-button" type="button">Run scenario</button>
+        </div>
+      </header>
+
+      <section class="status-bar">
+        <div>
+          <span class="status-label">Mode selected</span>
+          <strong id="selectedModeLabel">search</strong>
+        </div>
+        <div>
+          <span class="status-label">Server inventory</span>
+          <strong id="serverInventoryLabel">Loading...</strong>
+        </div>
+        <div>
+          <span class="status-label">Scenario focus</span>
+          <strong id="selectedScenarioLabel">Loading...</strong>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="metric-card">
+          <span>Definitions loaded</span>
+          <strong id="definitionsDelta">-</strong>
+          <small>Search mode compared with eager mode</small>
+        </article>
+        <article class="metric-card">
+          <span>Definition bytes saved</span>
+          <strong id="bytesDelta">-</strong>
+          <small>Visible proxy for prompt/tool load cost</small>
+        </article>
+        <article class="metric-card">
+          <span>Same deliverable</span>
+          <strong id="equivalenceLabel">Pending</strong>
+          <small>Both modes should finish successfully</small>
+        </article>
+        <article class="metric-card">
+          <span>Search steps</span>
+          <strong id="searchStepsLabel">-</strong>
+          <small>Catalog and on-demand load actions</small>
+        </article>
+      </section>
+
+      <section class="dashboard-grid lab-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Configuration</p>
+              <h2>Scenario and mode</h2>
+            </div>
+          </div>
+          <div class="lab-controls">
+            <label>
+              Scenario
+              <select id="scenarioSelect"></select>
+            </label>
+            <fieldset class="mode-group">
+              <legend>Mode</legend>
+              <label class="choice-pill">
+                <input type="radio" name="runMode" value="search" checked />
+                <span>Search mode</span>
+              </label>
+              <label class="choice-pill">
+                <input type="radio" name="runMode" value="eager" />
+                <span>Eager mode</span>
+              </label>
+            </fieldset>
+            <p class="lab-note">
+              Search mode loads only the needed tool definitions. Eager mode loads the full catalog
+              before the scenario starts.
+            </p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Servers</p>
+              <h2>Local MCP-style catalog</h2>
+            </div>
+          </div>
+          <div id="serverList" class="server-list"></div>
+        </article>
+      </section>
+
+      <section class="comparison-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Search</p>
+              <h2>On-demand loading</h2>
+            </div>
+          </div>
+          <div class="lab-metrics" id="searchMetrics"></div>
+          <div class="trace-list" id="searchTrace"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Eager</p>
+              <h2>Everything up front</h2>
+            </div>
+          </div>
+          <div class="lab-metrics" id="eagerMetrics"></div>
+          <div class="trace-list" id="eagerTrace"></div>
+        </article>
+      </section>
+
+      <section class="comparison-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Output</p>
+              <h2>Scenario deliverable</h2>
+            </div>
+          </div>
+          <pre id="scenarioOutput" class="output-panel">Run a scenario to compare eager and search modes.</pre>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Summary</p>
+              <h2>What this proves</h2>
+            </div>
+          </div>
+          <div id="resultSummary" class="summary-callout">
+            This is a local simulation of the tool-search problem. It demonstrates lower definition
+            loading for the same workflow, not OpenAI API benchmark parity.
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <template id="serverCardTemplate">
+      <article class="server-card">
+        <div class="server-card-header">
+          <strong class="server-name"></strong>
+          <span class="server-count"></span>
+        </div>
+        <p class="server-description"></p>
+      </article>
+    </template>
+
+    <template id="metricItemTemplate">
+      <div class="metric-row">
+        <span class="metric-row-label"></span>
+        <strong class="metric-row-value"></strong>
+      </div>
+    </template>
+
+    <template id="traceItemTemplate">
+      <article class="trace-item">
+        <div class="trace-badge"></div>
+        <div>
+          <strong class="trace-target"></strong>
+          <p class="trace-detail"></p>
+        </div>
+      </article>
+    </template>
+
+    <script src="/tool-search-lab.js" defer></script>
+  </body>
+</html>
