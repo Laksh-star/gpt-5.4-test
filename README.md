@@ -125,6 +125,43 @@ Recommended demo sequence:
 7. Resize to mobile width.
 8. Run the Playwright suite.
 
+## What This Demo Demonstrates
+
+This repository is a good demo of:
+
+- Complex coding on a non-trivial app built from scratch
+- Agentic workflow execution across planning, implementation, debugging, and verification
+- Playwright test generation and browser automation
+- Visible browser operation for a live UI workflow
+- Resilient fallback logic when preferred market-data providers are unavailable
+
+In practical terms, this demo shows:
+
+- a complete working app
+- a deterministic mock mode for repeatable tests and recordings
+- a live-data mode with provider fallback behavior
+- a passing Playwright test suite entry point
+- a browser-driven demo flow covering add, edit, delete, refresh, theme toggle, and responsive resize
+
+## What This Demo Does Not Demonstrate
+
+This repository is not strong evidence for:
+
+- deep web research or multi-source synthesis
+- large tool-search ecosystems or MCP-style tool selection
+- 1M-context or very long-context workflows
+- spreadsheet, document, or presentation generation
+- explicit token-efficiency or `/fast` mode measurement
+- custom confirmation-policy tuning
+
+It only partially demonstrates:
+
+- computer use beyond the browser
+- screenshot-driven interaction
+- native desktop-style automation across arbitrary applications
+
+The browser automation here is primarily Playwright-based web interaction, which is strong evidence for browser-task execution, but not a full proof of generalized desktop computer use.
+
 ## Known Limitations
 
 - This is a lightweight local project, not a production-grade deployment setup.
