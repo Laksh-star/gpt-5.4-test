@@ -7,4 +7,7 @@ playwright-report/
 portfolio-app.png
 portfolio-app-live.png
 portfolio-demo-recording.png
+!docs/
+!docs/screenshots/
+!docs/screenshots/*.png
 SESSION_REPORT.md

@@ -2,6 +2,28 @@
 
 A self-contained stock portfolio tracker with a lightweight Python backend, responsive frontend, live quote fallbacks, and Playwright end-to-end coverage.
 
+## Why This Is a GPT-5.4 Demo
+
+This project is meant to demonstrate a focused subset of GPT-5.4-style capabilities in a concrete, reviewable form:
+
+- building a non-trivial app from an empty workspace
+- planning and executing a multi-step coding workflow end to end
+- generating and running Playwright automation
+- operating a live browser session to verify UI behavior
+- recovering when preferred data providers are unavailable by using fallbacks
+
+It is best understood as a practical coding-and-browser-agent demo, not as a proof of every GPT-5.4 release claim.
+
+## Screenshots
+
+### Visible browser demo
+
+![Visible browser demo](docs/screenshots/portfolio-demo-recording.png)
+
+### Live-data mode
+
+![Live data mode](docs/screenshots/portfolio-app-live.png)
+
 ## Features
 
 - Watchlist for major tickers such as `AAPL`, `GOOGL`, `TSLA`, `MSFT`, and `NVDA`
@@ -124,6 +146,22 @@ Recommended demo sequence:
 6. Delete one holding.
 7. Resize to mobile width.
 8. Run the Playwright suite.
+
+## Demo Script
+
+If you are screen-recording or presenting this repo, use this tighter sequence:
+
+1. Start the app in mock mode.
+2. Open `http://127.0.0.1:8000`.
+3. Add `AAPL` with `10` shares at `180`.
+4. Add `MSFT` with `5` shares at `300`.
+5. Click `Refresh prices`.
+6. Toggle dark mode.
+7. Edit the first holding and change the share count.
+8. Delete the second holding.
+9. Resize to mobile width and show the responsive layout.
+10. Run `npx playwright test` and show the passing result.
+11. Optionally rerun in live-data mode to show provider fallback behavior.
 
 ## What This Demo Demonstrates
 
